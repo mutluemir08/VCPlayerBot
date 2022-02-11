@@ -70,7 +70,7 @@ async def player(client, message):
 
 @Client.on_message(filters.command(["skip", f"skip@{Config.BOT_USERNAME}"]) & admin_filter & chat_filter)
 async def skip_track(_, m: Message):
-    msg=await m.reply('trying to skip from queue..')
+    msg=await m.reply('Sıradaki Şarkıya Atlanıyor..')
     if not Config.CALL_STATUS:
         await msg.edit(
             "Oynatıcı boşta, oynatıcıyı aşağıdaki düğmeyi kullanarak başlatın. ㅤㅤㅤㅤ",
