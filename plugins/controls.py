@@ -162,7 +162,7 @@ async def set_vol(_, m: Message):
         await delete_messages([m])
         return
     if len(m.command) < 2:
-        await m.reply_text('VCPlayer'ınızın Sesini Değiştirin. ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ', reply_markup=await volume_buttons())
+        await m.reply_text('VCPlayer Sesini Değiştirin.', reply_markup=await volume_buttons())
         await delete_messages([m])
         return
     if not 1 < int(m.command[1]) < 200:
