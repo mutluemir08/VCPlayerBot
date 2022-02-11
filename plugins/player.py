@@ -379,10 +379,10 @@ async def channel_play_list(client, m: Message):
                     await k.edit(f"Başarıyla {msg} dosyaları {chat.title} playliste eklendi")
                     await delete_messages([m, k])
             else:
-                await k.edit("The given channel is invalid. For private channels it should start with -100 and for public channels it should start with @\nExamples - `/cplay @VCPlayerFiles or /cplay -100125369865\n\nFor private channel, both bot and the USER account should be members of channel.")
+                await k.edit("Verilen kanal geçersiz. Özel kanallarda -100 ile, genel kanallarda ise -100 ile başlamalıdır. @\nExamples - `/cplay @VCPlayerFiles or /cplay -100125369865\n\nÖzel kanal için hem bot hem de KULLANICI hesabı kanalın üyesi olmalıdır.")
                 await delete_messages([m, k])
         else:
-            await k.edit("You didn't gave me any channel. Give me a channel id or username from which i should play files . \nFor private channels it should start with -100 and for public channels it should start with @\nExamples - `/cplay @VCPlayerFiles or /cplay -100125369865\n\nFor private channel, both bot and the USER account should be members of channel.")
+            await k.edit("Kanal verilmedi. Dosyaları oynatmam gereken bir kanal kimliği veya kullanıcı adı verin. \nÖzel kanallarda -100 ile, genel kanallarda ise -100 ile başlamalıdır. @\nExamples - `/cplay @VCPlayerFiles or /cplay -100125369865\n\nFor private channel, both bot and the USER account should be members of channel.")
             await delete_messages([m, k])
 
 
@@ -392,14 +392,14 @@ async def yt_play_list(client, m: Message):
     with suppress(MessageIdInvalid, MessageNotModified):
         if m.reply_to_message is not None and m.reply_to_message.document:
             if m.reply_to_message.document.file_name != "YouTube_PlayList.json":
-                k=await m.reply("Invalid PlayList file given. Use @GetPlayListBot  or search for a playlist in @DumpPlaylist to get a playlist file.")
+                k=await m.reply("Geçersiz Oynatma Listesi dosyası verildi. Bir çalma listesi dosyası almak için @GetPlayListBot'u kullanın veya @DumpPlaylist'te bir çalma listesi arayın.")
                 await delete_messages([m, k])
                 return
             ytplaylist=await m.reply_to_message.download()
-            status=await m.reply("Trying to get details from playlist.")
+            status=await m.reply("Oynatma listesinden ayrıntılar alınıyor.")
             n=await import_play_list(ytplaylist)
             if not n:
-                await status.edit("Errors Occured while importing playlist.")
+                await status.edit("Oynatma listesi içe aktarılırken hata oluştu.")
                 await delete_messages([m, status])
                 return
             if Config.SHUFFLE:
@@ -415,21 +415,21 @@ async def yt_play_list(client, m: Message):
             else:
                 await delete_messages([m, status])
         else:
-            k=await m.reply("No playList file given. Use @GetPlayListBot  or search for a playlist in @DumpPlaylist to get a playlist file.")
+            k=await m.reply("Oynatma Listesi dosyası verilmedi. Bir çalma listesi dosyası almak için @GetPlayListBot'u kullanın veya @DumpPlaylist'te bir çalma listesi arayın.")
             await delete_messages([m, k])
 
 
 @Client.on_message(filters.command(["stream", f"stream@{Config.BOT_USERNAME}"]) & admin_filter & chat_filter)
 async def stream(client, m: Message):
     with suppress(MessageIdInvalid, MessageNotModified):
-        msg=await m.reply("Checking the recived input.")
+        msg=await m.reply("Medya Kontrol Ediliyor.")
         if m.reply_to_message and m.reply_to_message.text:
             link=m.reply_to_message.text
         elif " " in m.text:
             text = m.text.split(" ", 1)
             link = text[1]
         else:
-            k = await msg.edit("Provide a link to stream!")
+            k = await msg.edit("Akış için bir bağlantı verin!")
             await delete_messages([m, k])
             return
         regex = r"^(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?"
@@ -437,7 +437,7 @@ async def stream(client, m: Message):
         if match:
             stream_link=await get_link(link)
             if not stream_link:
-                k = await msg.edit("This is an invalid link.")
+                k = await msg.edit("Verilen Link Geçersiz.")
                 await delete_messages([m, k])
                 return
         else:
@@ -446,9 +446,9 @@ async def stream(client, m: Message):
             is_audio_ = await is_audio(stream_link)
         except:
             is_audio_ = False
-            LOGGER.error("Unable to get Audio properties within time.")
+            LOGGER.error("Ses özellikleri zaman içinde alınamıyor.")
         if not is_audio_:
-            k = await msg.edit("This is an invalid link, provide me a direct link or a youtube link.")
+            k = await msg.edit("Bu geçersiz bir bağlantı, bana doğrudan bir bağlantı veya bir youtube bağlantısı sağlayın.")
             await delete_messages([m, k])
             return
         try:
@@ -456,7 +456,7 @@ async def stream(client, m: Message):
         except:
             dur=0
         if dur != 0:
-            k = await msg.edit("This is not a live stream, Use /play command.")
+            k = await msg.edit("Bu bir canlı yayın değil, /play komutunu kullanın.")
             await delete_messages([m, k])
             return
         k, msg_=await stream_from_link(stream_link)
@@ -496,14 +496,14 @@ async def not_chat(_, m: Message):
                 InlineKeyboardButton('No', callback_data='closesudo'),
             ]
             ]
-        await m.reply("This is not the group which i have been configured to play, Do you want to set this group as default CHAT?", reply_markup=InlineKeyboardMarkup(buttons))
+        await m.reply("Bu, oynamak için yapılandırdığım grup değil, Bu grubu varsayılan CHAT olarak ayarlamak istiyor musunuz?", reply_markup=InlineKeyboardMarkup(buttons))
         await delete_messages([m])
     else:
         buttons = [
             [
-                InlineKeyboardButton('⚡️Make Own Bot', url='https://github.com/subinps/VCPlayerBot'),
-                InlineKeyboardButton('🧩 Join Here', url='https://t.me/subin_works'),
+                InlineKeyboardButton('⚡️Kendi Botunu Yap', url='https://github.com/mutluemir08/VCPlayerBot'),
+                InlineKeyboardButton('🧩 Katıl', url='https://t.me/theagencysohbet'),
             ]
             ]
-        await m.reply("<b>You can't use this bot in this group, for that you have to make your own bot from the [SOURCE CODE](https://github.com/subinps/VCPlayerBot) below.</b>", disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(buttons))
+        await m.reply("<b>Bu botu bu grupta kullanamazsınız, bunun için kendi botunuzu oluşturmalısınız. [SOURCE CODE](https://github.com/mutluemir08/VCPlayerBot) below.</b>", disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(buttons))
 
