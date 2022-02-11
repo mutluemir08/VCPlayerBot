@@ -70,7 +70,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         admins = await get_admins(Config.CHAT)
         if query.data.startswith("info"):
             me, you = query.data.split("_")
-            text="Join @subin_works"
+            text="Katıl @theagencysohbet"
             if you == "volume":
                 await query.answer()
                 await query.message.edit_reply_markup(reply_markup=await volume_buttons())
@@ -82,40 +82,40 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 await query.answer()
                 return
             if you == "video":
-                text="Toggle your bot to Video / Audio Player."
+                text="Botunuzu Video / Ses Oynatıcı olarak değiştirin."
             elif you == "shuffle":
-                text="Enable or disable auto playlist shuffling"
+                text="Otomatik oynatma listesi karıştırmayı etkinleştirin veya devre dışı bırakın"
             elif you == "admin":
-                text="Enable to restrict the play command only for admins."
+                text="Oynatma komutunu yalnızca yöneticiler için kısıtlamak için etkinleştirin."
             elif you == "mode":
-                text="Enabling Non- stop playback will make the player running 24 / 7 and automatic startup when restarting. "
+                text="Kesintisiz oynatmanın etkinleştirilmesi, oynatıcının 7/24 çalışmasını ve yeniden başlatıldığında otomatik olarak başlatılmasını sağlar. "
             elif you == "title":
-                text="Enable to edit the VideoChat title to Current playing song's title."
+                text="VideoChat başlığını Şu anda çalan şarkının başlığına göre düzenlemeyi etkinleştirin."
             elif you == "reply":
-                text="Choose whether to auto-reply messaged for userbot. "
+                text="Userbot için gönderilen mesajların otomatik olarak yanıtlanıp yanıtlanmayacağını seçin. "
             elif you == "videorecord":
-                text = "Enable to record both video and audio, if disabled only audio will be recorded."
+                text = "Hem video hem de ses kaydetmeyi etkinleştir, devre dışı bırakılırsa yalnızca ses kaydedilecektir."
             elif you == "videodimension":
-                text = "Choose the recording video's dimensions"
+                text = "Kayıt videosunun boyutlarını seçin"
             elif you == "rectitle":
-                text = "A custom title for your chat recordings, Use /rtitle command to set a title"
+                text = "Sohbet kayıtlarınız için özel bir başlık, Başlık belirlemek için /rtitle komutunu kullanın"
             elif you == "recdumb":
-                text = "A channel to which all the recordings are forwarded. Make sure The User account is admin over there. Set one using /env or /config."
+                text = "Tüm kayıtların yönlendirildiği bir kanal. Kullanıcı hesabının orada yönetici olduğundan emin olun. /env veya /config kullanarak birini ayarlayın."
             await query.answer(text=text, show_alert=True)
             return
 
 
         elif query.data.startswith("help"):
             if query.message.chat.type != "private" and query.message.reply_to_message.from_user is None:
-                return await query.answer("I cant help you here, since you are an anonymous admin, message me in private chat.", show_alert=True)
+                return await query.answer("Anonim bir yönetici olduğunuz için burada size yardımcı olamam, bana özel sohbette mesaj atın.", show_alert=True)
             elif query.message.chat.type != "private" and query.from_user.id != query.message.reply_to_message.from_user.id:
-                return await query.answer("Okda", show_alert=True)
+                return await query.answer("Tamam", show_alert=True)
             me, nyav = query.data.split("_")
             back=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton("Back", callback_data="help_main"),
-                        InlineKeyboardButton("Close", callback_data="close"),
+                        InlineKeyboardButton("Geri", callback_data="help_main"),
+                        InlineKeyboardButton("Kapat", callback_data="close"),
                     ],
                 ]
                 )
@@ -123,36 +123,36 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
-                            InlineKeyboardButton(f"Play", callback_data='help_play'),
-                            InlineKeyboardButton(f"Settings", callback_data=f"help_settings"),
-                            InlineKeyboardButton(f"Recording", callback_data='help_record'),
+                            InlineKeyboardButton(f"Oynat", callback_data='help_play'),
+                            InlineKeyboardButton(f"Ayarlar", callback_data=f"help_settings"),
+                            InlineKeyboardButton(f"Kayıt", callback_data='help_record'),
                         ],
                         [
-                            InlineKeyboardButton("Scheduling", callback_data="help_schedule"),
-                            InlineKeyboardButton("Controling", callback_data='help_control'),
-                            InlineKeyboardButton("Admins", callback_data="help_admin"),
+                            InlineKeyboardButton("Zamanlama", callback_data="help_schedule"),
+                            InlineKeyboardButton("Kontrol", callback_data='help_control'),
+                            InlineKeyboardButton("Yöneticiler", callback_data="help_admin"),
                         ],
                         [
-                            InlineKeyboardButton(f"Misc", callback_data='help_misc'),
-                            InlineKeyboardButton("Config Vars", callback_data='help_env'),
-                            InlineKeyboardButton("Close", callback_data="close"),
+                            InlineKeyboardButton(f"Diğer", callback_data='help_misc'),
+                            InlineKeyboardButton("Yapılandırma Değişkenleri", callback_data='help_env'),
+                            InlineKeyboardButton("Kapat", callback_data="close"),
                         ],
                     ]
                     )
-                await query.message.edit("Showing help menu, Choose from the below options.", reply_markup=reply_markup, disable_web_page_preview=True)
-            elif nyav == 'play':
+                await query.message.edit("Yardım menüsü gösteriliyor, Aşağıdaki seçeneklerden birini seçin.", reply_markup=reply_markup, disable_web_page_preview=True)
+            elif nyav == 'Oynat':
                 await query.message.edit(Config.PLAY_HELP, reply_markup=back, disable_web_page_preview=True)
-            elif nyav == 'settings':
+            elif nyav == 'Ayarlar':
                 await query.message.edit(Config.SETTINGS_HELP, reply_markup=back, disable_web_page_preview=True)
-            elif nyav == 'schedule':
+            elif nyav == 'Zamanlama':
                 await query.message.edit(Config.SCHEDULER_HELP, reply_markup=back, disable_web_page_preview=True)
-            elif nyav == 'control':
+            elif nyav == 'Kontrol':
                 await query.message.edit(Config.CONTROL_HELP, reply_markup=back, disable_web_page_preview=True)
-            elif nyav == 'admin':
+            elif nyav == 'Yönetici':
                 await query.message.edit(Config.ADMIN_HELP, reply_markup=back, disable_web_page_preview=True)
-            elif nyav == 'misc':
+            elif nyav == 'Diğer':
                 await query.message.edit(Config.MISC_HELP, reply_markup=back, disable_web_page_preview=True)
-            elif nyav == 'record':
+            elif nyav == 'Kayıt':
                 await query.message.edit(Config.RECORDER_HELP, reply_markup=back, disable_web_page_preview=True)
             elif nyav == 'env':
                 await query.message.edit(Config.ENV_HELP, reply_markup=back, disable_web_page_preview=True)
@@ -160,16 +160,16 @@ async def cb_handler(client: Client, query: CallbackQuery):
             
         if not query.from_user.id in admins:
             await query.answer(
-                "😒 Played Joji.mp3",
+                "😒 Sadece Adminler",
                 show_alert=True
                 )
             return
         #scheduler stuffs
         if query.data.startswith("sch"):
             if query.message.chat.type != "private" and query.message.reply_to_message.from_user is None:
-                return await query.answer("You cant use scheduling here, since you are an anonymous admin. Schedule from private chat.", show_alert=True)
+                return await query.answer("Anonim bir yönetici olduğunuz için burada zamanlamayı kullanamazsınız. Özel sohbetten programlayın.", show_alert=True)
             if query.message.chat.type != "private" and query.from_user.id != query.message.reply_to_message.from_user.id:
-                return await query.answer("Okda", show_alert=True)
+                return await query.answer("Tamam", show_alert=True)
             data = query.data
             today = datetime.datetime.now(IST)
             smonth=today.strftime("%B")
@@ -181,7 +181,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 none, none , yea_r, month_, day = data.split("_")
                 if yea_r == "choose":
                     year=int(year)
-                    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+                    months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
                     button=[]
                     button_=[]
                     k=0
@@ -195,7 +195,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                             button.append([InlineKeyboardButton(text=f"{str(month)}  {str(year_)}",callback_data=f"sch_showdate_{year_}_{k}")])
                     button = button + button_
                     button.append([InlineKeyboardButton("Close", callback_data="schclose")])
-                    await query.message.edit("Now Choose the month to schedule a voicechatㅤ ㅤㅤ", reply_markup=InlineKeyboardMarkup(button))
+                    await query.message.edit("Şimdi sesli sohbet planlamak için ayı seçinㅤ ㅤㅤ", reply_markup=InlineKeyboardMarkup(button))
                 elif day == "none":
                     return
                 else:
@@ -265,16 +265,16 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 final=f"{day}th {smonth} {year} at {hour}:{minute}"
                 button=[
                     [
-                        InlineKeyboardButton("Confirm", callback_data=f"schconfirm_{year}-{month}-{day} {hour}:{minute}"),
-                        InlineKeyboardButton("Back", callback_data=f"sch_day_{year}_{month}_{day}_{hour}")
+                        InlineKeyboardButton("Onayla", callback_data=f"schconfirm_{year}-{month}-{day} {hour}:{minute}"),
+                        InlineKeyboardButton("Geri", callback_data=f"sch_day_{year}_{month}_{day}_{hour}")
                     ],
                     [
-                        InlineKeyboardButton("Close", callback_data="schclose")
+                        InlineKeyboardButton("Kapat", callback_data="schclose")
                     ]
                 ]
                 data=Config.SCHEDULED_STREAM.get(f"{query.message.chat.id}_{query.message.message_id}")
                 if not data:
-                    await query.answer("This schedule is expired", show_alert=True)
+                    await query.answer("Bu programın süresi doldu", show_alert=True)
                 if data['3'] == "telegram":
                     title=data['1']
                 else:
