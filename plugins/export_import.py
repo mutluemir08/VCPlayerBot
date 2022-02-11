@@ -44,7 +44,7 @@ admin_filter=filters.create(is_admin)
 @Client.on_message(filters.command(["export", f"export@{Config.BOT_USERNAME}"]) & admin_filter & chat_filter)
 async def export_play_list(client, message: Message):
     if not Config.playlist:
-        k=await message.reply_text("Playlist is Empty")
+        k=await message.reply_text("Oynatma Listesi Boş")
         await delete_messages([message, k])
         return
     file=f"{message.chat.id}_{message.message_id}.json"
