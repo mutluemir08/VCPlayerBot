@@ -342,7 +342,7 @@ async def channel_play_list(client, m: Message):
                     await client.get_chat_member(int(me), Config.USER_ID)
                 except (ValueError, PeerIdInvalid, ChannelInvalid):
                     LOGGER.error(f"Verilen Kanal Yanlış yada @{Config.BOT_USERNAME} yönetici değil.", exc_info=True)
-                    await k.edit(f"Verilen Kanal Yanlış yada @{Config.BOT_USERNAME} yönetici değil.", Kanal gizli değilse lütfen kanalın kullanıcı adını belirtin.")
+                    await k.edit(f"Verilen Kanal Yanlış yada @{Config.BOT_USERNAME} yönetici değil, Kanal gizli değilse lütfen kanalın kullanıcı adını belirtin.")
                     await delete_messages([m, k])
                     return
                 except UserNotParticipant:
